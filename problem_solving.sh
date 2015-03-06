@@ -3,7 +3,8 @@
 
 RECORDS=1000000
 
-PSQL="psql -p 5432 -X"
+PSQL="psql -p 5433 -X"
+
 
 
 echo 1. Create table vacuum_table
@@ -14,7 +15,7 @@ echo 2. Insert $RECORDS records into vacuum_table
 
 $PSQL -1 -c "insert into vacuum_table (id) (select generate_series(1, $RECORDS) id)"
 
-TSIZE=$(psql -X -At -v table_schema="'public'" -v table_name="'vacuum_table'" -f table_size.sql)
+TSIZE=$($PSQL -At -v table_schema="'public'" -v table_name="'vacuum_table'" -f table_size.sql)
 
 echo 3. After insert $RECORDS records table size is: $TSIZE
 
@@ -24,7 +25,7 @@ echo 5. Update table vacuum_table
 
 $PSQL -1 -c "update vacuum_table set id = id"
 
-TSIZE=$(psql -X -At -v table_schema="'public'" -v table_name="'vacuum_table'" -f table_size.sql)
+TSIZE=$($PSQL -X -At -v table_schema="'public'" -v table_name="'vacuum_table'" -f table_size.sql)
 
 echo 6. After update $RECORDS records table size is: $TSIZE
 
@@ -37,7 +38,7 @@ echo 8. Run VACUUM FULL
 
 $PSQL -1 -c 'VACUUM FULL'
 
-TSIZE=$(psql -X -At -v table_schema="'public'" -v table_name="'vacuum_table'" -f table_size.sql)
+TSIZE=$($PSQL -X -At -v table_schema="'public'" -v table_name="'vacuum_table'" -f table_size.sql)
 
 echo 9. After VACUUM FULL table size is: $TSIZE
 
@@ -49,7 +50,7 @@ echo 11. Run VACUUM FULL
 
 $PSQL -1 -c 'VACUUM FULL'
 
-TSIZE=$(psql -X -At -v table_schema="'public'" -v table_name="'vacuum_table'" -f table_size.sql)
+TSIZE=$($PSQL -X -At -v table_schema="'public'" -v table_name="'vacuum_table'" -f table_size.sql)
 
 echo 12. After VACUUM FULL table size is: $TSIZE
 
