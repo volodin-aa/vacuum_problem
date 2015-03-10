@@ -75,6 +75,7 @@ echo 15. After second update and VACUUM FULL table size is: $TSIZE
 echo 16. Killing long live transaction
 
 kill -9 $PID
+$PSQL -1 -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE query='select pg_sleep(120)'"
 
 echo 17. Run VACUUM FULL
 
