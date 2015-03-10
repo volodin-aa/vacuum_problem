@@ -72,4 +72,4 @@ VACUUM
 16. Killing long live transaction
 17. Run VACUUM FULL
 VACUUM
-18. After killing and VACUUM FULL table size is: 176152576
+18. After killing and VACUUM FULL table size is: 58736640
